@@ -126,21 +126,5 @@ api = make_api(
 
 
 
-
-dummy_fn = make_worker_lambda(
-    f"{app}-dummy",
-    "dummy",
-    basic_logs_role(f"{app}-dummy"),
-    {}
-)
-
-probe_url = aws.lambda_.FunctionUrl(
-    f"{app}-dummy-url",
-    function_name=dummy_fn.name,
-    authorization_type="NONE",
-)
-
-pulumi.export("ffmpegDummyUrl", probe_url.function_url)
-
 pulumi.export("clipscdnUrl", clips_cdn.domain_name)
 pulumi.export("apiUrl", api.api_endpoint)
