@@ -1,0 +1,4 @@
+up:
+    PULUMI_CONFIG_PASSPHRASE=miniclip2 pulumi up
+down:
+    PULUMI_CONFIG_PASSPHRASE=miniclip2 pulumi destroy
