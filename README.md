@@ -72,7 +72,24 @@ Run `pulumi destroy` to tear everything down.
 
 ## Cost
 
-Roughly $11.50/month for 100 users, mostly CloudFront bandwidth.
+## Cost
+
+Estimated monthly cost for 100 active users: 5 uploads of 100MB each, 10 clips of 20MB each, and 50 CDN views per clip.
+
+| Service | Usage | Est. Cost |
+|---|---|---|
+| S3 Storage | 70GB (uploads + clips) at $0.023/GB | $1.61 |
+| S3 Requests | 1,500 PUTs at $0.005/1,000 | $0.01 |
+| Lambda (`process_video`) | 1,000 × 30s × 2048MB = 61,440 GB-s | $1.02 |
+| Lambda (all other functions) | 20,000 invocations × 200ms × 128MB | $0.01 |
+| Step Functions | 1,000 executions × 5 transitions | $0.13 |
+| CloudFront | 1,000GB egress at $0.0085/GB | $8.50 |
+| CloudFront Requests | 50,000 at $0.0075/10,000 | $0.04 |
+| API Gateway | 20,000 requests at $3.50/million | $0.07 |
+| DynamoDB | On-demand, low volume | $0.10 |
+| **Total** | | **$11.49** |
+
+CloudFront egress is about 75% of the total. An equivalent EC2 + RDS setup would cost roughly $50+/month regardless of usage.
 
 ## Limitations
 
